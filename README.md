@@ -1,4 +1,4 @@
-<img width="480" height="212" alt="image" src="https://github.com/user-attachments/assets/aac3d190-01d1-4552-b3fd-78aba72b7d32" /><H3>Name: P KEERTHANA</H3>
+<H3>Name: P KEERTHANA</H3>
 <H3>Register no: 212225230138</H3>
 <H3>Date: 28-10-2026</H3>
 <H3>Experiment No. 2 </H3>
