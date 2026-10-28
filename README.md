@@ -1,4 +1,4 @@
-<H3>Name: P KEERTHANA</H3>
+<img width="480" height="212" alt="image" src="https://github.com/user-attachments/assets/aac3d190-01d1-4552-b3fd-78aba72b7d32" /><H3>Name: P KEERTHANA</H3>
 <H3>Register no: 212225230138</H3>
 <H3>Date: 28-10-2026</H3>
 <H3>Experiment No. 2 </H3>
@@ -49,13 +49,35 @@ STEP 9:For ‘N ‘ iterations ,do the following:<BR>
 STEP 10:Plot the error for each iteration <BR>
 STEP 11:Print the accuracy<BR>
 # PROGRAM:
-  ```
+```
+
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+from sklearn.datasets import make_blobs
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 
+# Generate dataset
+x, y = make_blobs(n_samples=100, centers=2,
+                  n_features=2, random_state=1)
+
+df = pd.DataFrame(x, columns=['Feature1', 'Feature2'])
+df['Class'] = y
+print(df.head())
+
+# Save dataset
+df.to_csv('blobs_dataset.csv', index=False)
+
+# Scatter plot
+plt.scatter(x[:, 0], x[:, 1], c=y)
+plt.xlabel("Feature 1")
+plt.ylabel("Feature 2")
+plt.title("Synthetic Blobs Dataset")
+plt.show()
+
+
+# Perceptron class
 class Perceptron:
     def __init__(self, learning_rate=0.05):
         self.learning_rate = learning_rate
@@ -84,52 +106,10 @@ class Perceptron:
         return np.where(self.f(x) >= 0, 1, -1)
 
 
-# Load dataset
-url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data'
-df = pd.read_csv(url, header=None)
-print(df.head())
+# Convert classes to -1 and 1
+y = np.where(y == 0, -1, 1)
 
-y = df.iloc[:, 4].values
-x = df.iloc[:, :3].values
-
-# 3D Scatter plot
-fig = plt.figure()
-ax = plt.axes(projection='3d')
-ax.set_title("Iris Dataset")
-ax.set_xlabel("Sepal Length")
-ax.set_ylabel("Sepal Width")
-ax.set_zlabel("Petal Length")
-
-ax.scatter(x[:50, 0], x[:50, 1], x[:50, 2],
-           color='red', marker='o', s=10, label='Setosa')
-ax.scatter(x[50:100, 0], x[50:100, 1], x[50:100, 2],
-           color='blue', marker='^', s=10, label='Versicolor')
-ax.scatter(x[100:150, 0], x[100:150, 1], x[100:150, 2],
-           color='green', marker='x', s=10, label='Virginica')
-
-plt.legend()
-plt.show()
-
-# Select two features and two classes
-x = df.iloc[:100, :2].values
-y = y[:100]
-
-# 2D Scatter plot
-plt.figure(figsize=(8, 5))
-plt.scatter(x[:50, 0], x[:50, 1],
-            color='red', marker='o', label='Setosa')
-plt.scatter(x[50:100, 0], x[50:100, 1],
-            color='blue', marker='x', label='Versicolor')
-plt.xlabel("Sepal Length")
-plt.ylabel("Sepal Width")
-plt.title("Iris Dataset - 2D Scatter Plot")
-plt.legend()
-plt.show()
-
-# Convert labels
-y = np.where(y == 'Iris-setosa', 1, -1)
-
-# Standardization
+# Standardize features
 x[:, 0] = (x[:, 0] - x[:, 0].mean()) / x[:, 0].std()
 x[:, 1] = (x[:, 1] - x[:, 1].mean()) / x[:, 1].std()
 
@@ -138,35 +118,37 @@ x_train, x_test, y_train, y_test = train_test_split(
     x, y, test_size=0.2, random_state=1
 )
 
-# Train Perceptron
+# Train model
 classifier = Perceptron(learning_rate=0.05)
 classifier.fit(x_train, y_train, n_iter=20)
 
-# Accuracy
+# Calculate accuracy
 y_pred = classifier.predict(x_test)
 print("Accuracy:", accuracy_score(y_test, y_pred) * 100, "%")
 
 # Error graph
-plt.figure(figsize=(6, 4))
-plt.plot(range(1, 21), classifier.misclassified_samples, marker='o')
+plt.plot(range(1, 21),
+         classifier.misclassified_samples, marker='o')
 plt.xlabel("Epoch")
 plt.ylabel("Errors")
 plt.title("Perceptron Learning")
 plt.show()
+
 ```
 
 
 # OUTPUT:
-<img width="587" height="225" alt="image" src="https://github.com/user-attachments/assets/7c7e2e10-7269-4d64-b9af-068d4c4f738a" />
-<img width="661" height="547" alt="image" src="https://github.com/user-attachments/assets/d2b0a9df-1eb6-4ecb-883a-a6822d2dc16f" />
-<img width="990" height="662" alt="image" src="https://github.com/user-attachments/assets/b067378c-cde5-4bda-bcc8-3c6879801be1" />
-<img width="887" height="521" alt="image" src="https://github.com/user-attachments/assets/7f91c452-c5c1-4d6c-936f-105865fe55fd" />
+<img width="477" height="217" alt="image" src="https://github.com/user-attachments/assets/ac3f8520-41ac-4b73-8d41-f220a5b6a75a" />
+<img width="741" height="592" alt="image" src="https://github.com/user-attachments/assets/2ca58d46-39c2-49e7-a759-ec9c3a990b96" />
+<img width="712" height="527" alt="image" src="https://github.com/user-attachments/assets/830b52ee-efe9-4340-a3a8-c72b498d8c9f" />
+
+
+
 
 
 
 
 
 # RESULT:
- Thus, a single layer perceptron model is implemented using python to classify Iris data set.
-
+Thus, a single-layer perceptron model is implemented using Python to classify the Synthetic Blobs dataset.
  
